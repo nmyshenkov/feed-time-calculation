@@ -11,6 +11,7 @@ import (
 	"sync"
 )
 
+// Функция получения координат машин
 func GetCars(clientPool *sync.Pool, coord Coordinate) ([]Cars, error) {
 
 	var (

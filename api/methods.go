@@ -7,6 +7,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"sort"
 )
 
 // GetFeedTime - метод получения списка
@@ -112,6 +113,9 @@ func (t TypeApi) GetFeedTime(w http.ResponseWriter, r *http.Request) {
 	for i, pred := range predicts {
 		result[i].Time = pred
 	}
+
+	// сортируем
+	sort.Sort(ByTime(result))
 
 	setResult(w, result)
 	return

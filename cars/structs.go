@@ -8,7 +8,7 @@ type Coordinate struct {
 	Limit int64   `json:"limit"`
 }
 
-// Cars
+// Cars - структура с мащинами
 type Cars struct {
 	ID  int     `json:"id"`
 	Lat float64 `json:"lat"`

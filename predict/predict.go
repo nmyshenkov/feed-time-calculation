@@ -10,6 +10,7 @@ import (
 	"sync"
 )
 
+// GetPredict - функция получения времени маршрута
 func GetPredict(clientPool *sync.Pool, target Coordinate, source []Coordinate) (Response, error) {
 
 	var (
