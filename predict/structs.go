@@ -1,6 +1,6 @@
 package predict
 
-const URL = "https://dev-api.wheely.com/fake-eta/predict"
+const URL = "https://localhost:8081/predict"
 
 type Request struct {
 	Target Coordinate   `json:"target"`

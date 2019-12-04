@@ -1,6 +1,6 @@
 package cars
 
-const URL = "https://dev-api.wheely.com/fake-eta/cars"
+const URL = "https://localhost:8081/cars"
 
 type Coordinate struct {
 	Lat   float64 `json:"lat"`
