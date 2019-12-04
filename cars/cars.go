@@ -3,11 +3,12 @@ package cars
 import (
 	"encoding/json"
 	"errors"
+	"feed-time-calculation/common"
 	"io/ioutil"
+	"log"
 	"net/http"
 	"net/url"
 	"sync"
-	"whelly/common"
 )
 
 func GetCars(clientPool *sync.Pool, coord Coordinate) ([]Cars, error) {
@@ -20,6 +21,11 @@ func GetCars(clientPool *sync.Pool, coord Coordinate) ([]Cars, error) {
 		respBody     []byte
 		response     []Cars
 	)
+
+	// если не передан limit - задаем как 5 машин
+	if coord.Limit == 0 {
+		coord.Limit = 5
+	}
 
 	u, err = url.Parse(URL)
 	if err != nil {
@@ -43,15 +49,16 @@ func GetCars(clientPool *sync.Pool, coord Coordinate) ([]Cars, error) {
 	}
 	defer httpResponse.Body.Close()
 
-	if httpResponse.StatusCode != http.StatusOK {
-		return nil, errors.New("ошибка получения списка машин")
-	}
-
 	if respBody, err = ioutil.ReadAll(httpResponse.Body); err != nil {
 		return nil, err
 	}
 
-	if err = json.Unmarshal(respBody, response); err != nil {
+	if httpResponse.StatusCode != http.StatusOK {
+		log.Println(string(respBody))
+		return nil, errors.New("ошибка получения списка машин")
+	}
+
+	if err = json.Unmarshal(respBody, &response); err != nil {
 		return nil, err
 	}
 
